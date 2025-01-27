@@ -1,0 +1,6 @@
+@use "get";
+@use "../../components/variables";
+
+@function theme-light-color($key: "primary") {
+    @return get($theme-light-colors, $key);
+}

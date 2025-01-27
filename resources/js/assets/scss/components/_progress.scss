@@ -1,0 +1,6 @@
+@use "variables";
+@use "~bootstrap/scss/mixins";
+
+.progress-bar {
+    @include border-radius($progress-border-radius);
+}

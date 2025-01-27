@@ -1,0 +1,57 @@
+//bootstrap components
+@use "~bootstrap/scss/root";
+@use "~bootstrap/scss/reboot";
+@use "~bootstrap/scss/type";
+@use "~bootstrap/scss/images";
+@use "~bootstrap/scss/containers";
+@use "~bootstrap/scss/grid";
+@use "~bootstrap/scss/tables";
+@use "~bootstrap/scss/forms";
+@use "~bootstrap/scss/buttons";
+@use "~bootstrap/scss/transitions";
+@use "~bootstrap/scss/dropdown";
+@use "~bootstrap/scss/button-group";
+@use "~bootstrap/scss/nav";
+@use "~bootstrap/scss/navbar";
+@use "~bootstrap/scss/card";
+@use "~bootstrap/scss/accordion";
+@use "~bootstrap/scss/breadcrumb";
+@use "~bootstrap/scss/pagination";
+@use "~bootstrap/scss/badge";
+@use "~bootstrap/scss/alert";
+@use "~bootstrap/scss/progress";
+@use "~bootstrap/scss/list-group";
+@use "~bootstrap/scss/close";
+@use "~bootstrap/scss/toasts";
+@use "~bootstrap/scss/modal";
+@use "~bootstrap/scss/tooltip";
+@use "~bootstrap/scss/popover";
+@use "~bootstrap/scss/carousel";
+@use "~bootstrap/scss/spinners";
+
+// Bootstrap helpers
+@use "~bootstrap/scss/helpers";
+
+// Bootstrap utilities
+@use "~bootstrap/scss/utilities";
+@use "~bootstrap/scss/utilities/api";
+
+//custom components
+@use "../components/helpers";
+@use "../components/scrollbar";
+@use "../components/buttons";
+@use "../components/dropdown";
+@use "../components/cards";
+@use "../components/form-control";
+@use "../components/tables";
+@use "../components/progress";
+@use "../components/container";
+@use "../components/modal";
+@use "../components/tabs";
+@use "../components/alert";
+@use "../components/image";
+@use "../components/pagination";
+@use "../components/badges";
+@use "../components/breadcrumb";
+@use "../components/carousel";
+@use "../components/border";
