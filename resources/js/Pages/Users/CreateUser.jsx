@@ -19,13 +19,11 @@ const CreateUser = () => {
         e.preventDefault();
         
         post(route('users.store'));
-
-        
     }
 
     return (
         <AuthenticatedLayout>
-            <HeaderTitle title={getFormattedMessage('user.create.title')} to='/app/users' />
+            <HeaderTitle title={getFormattedMessage('user.create.title')} to='/users' />
 
             <div className='card'>
                 <div className='card-body'>

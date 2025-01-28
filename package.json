@@ -37,6 +37,7 @@
         "react-bootstrap-sweetalert": "^5.2.0",
         "react-bootstrap-v5": "^1.4.0",
         "react-data-table-component": "^7.6.2",
+        "react-datepicker": "^7.6.0",
         "react-helmet": "^6.1.0",
         "react-intl": "^7.1.4",
         "react-pro-sidebar": "^0.7.1",

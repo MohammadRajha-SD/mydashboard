@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
-import { placeholderText, getFormattedMessage, getAvatarName, getFormattedDate } from '@/Helpers/Helpers';
+import { placeholderText, getFormattedMessage, getFormattedDate } from '@/Helpers/Helpers';
 import TopProgressBar from '@/shared/loaders/TopProgressBar';
 import ReactDataTable from '@/shared/table/ReactDataTable';
-import { Link } from '@inertiajs/react';
 import moment from "moment";
 import TabTitle from '@/shared/tab-title/TabTitle';
 import { Inertia } from "@inertiajs/inertia";
@@ -11,8 +10,8 @@ import { router } from '@inertiajs/react';
 import ActionButton from '@/shared/action-buttons/ActionButton';
 import DeleteModel from '../../shared/action-buttons/DeleteModel';
 
-const Users = (props) => {
-    const { users, isLoading, totalRecord } = props;
+const Customers = (props) => {
+    const { customers, isLoading, total } = props;
     const [deleteModel, setDeleteModel] = useState(false);
     const [isDelete, setIsDelete] = useState(null);
 
@@ -28,52 +27,36 @@ const Users = (props) => {
 
     const goToEdit = (item) => {
         const id = item.id;
-        router.get(route('users.edit', { id: id }));
+        router.get(route('customers.edit', { id: id }));
     };
 
     const deleteUserFunction = (id) => {
-        Inertia.delete(route("users.destroy", id), {
+        Inertia.delete(route("customers.destroy", id), {
             onSuccess: () => {
-                alert("User deleted successfully!");
+                alert("customers deleted successfully!");
             },
             onError: (error) => {
-                console.error("Error deleting user:", error);
+                console.error("Error deleting customers:", error);
             },
         });
     }
     const columns = [
         {
-            name: getFormattedMessage("users.table.user.column.title"),
-            selector: (row) => row.first_name,
-            sortField: "first_name",
+            name: getFormattedMessage("customer.title"),
+            selector: (row) => row.name,
+            sortField: "name",
             sortable: true,
             cell: (row) => {
                 return (
-                    <div className="d-flex align-items-center">
-                        <div className="me-2">
-                            <Link href={`/users/${row.id}`}>
-                                <span className="custom-user-avatar fs-5">
-                                    {getAvatarName(
-                                        row.first_name + " " + row.last_name
-                                    )}
-                                </span>
-                            </Link>
-                        </div>
-                        <div className="d-flex flex-column">
-                            <Link
-                                href={`/users/${row.id}`}
-                                className="text-decoration-none"
-                            >
-                                {row.first_name + " " + row.last_name}
-                            </Link>
-                            <span>{row.email}</span>
-                        </div>
+                    <div>
+                        <div className="text-primary">{row.name}</div>
+                        <div>{row.email}</div>
                     </div>
                 );
             },
         },
         {
-            name: getFormattedMessage("users.table.phone-number.column.title"),
+            name: getFormattedMessage("globally.input.phone-number.label"),
             selector: (row) => row.phone,
             sortField: "phone",
             sortable: true,
@@ -82,14 +65,14 @@ const Users = (props) => {
             name: getFormattedMessage(
                 "globally.react-table.column.created-date.label"
             ),
-            selector: (row) => row.created_at,
+            selector: (row) => row.date,
             sortField: "created_at",
             sortable: true,
             cell: (row) => {
                 return (
                     <span className="badge bg-light-info">
                         <div className="mb-1">{row.time}</div>
-                        <div>{row.date}</div>
+                        {row.date}
                     </span>
                 );
             },
@@ -112,36 +95,37 @@ const Users = (props) => {
     ];
 
     const itemsValue =
-        users.data.length >= 0 &&
-        users.data.map((user) => ({
-            id: user.id,
-            first_name: user.first_name,
-            last_name: user.last_name,
-            email: user.email,
-            phone: user.phone,
-            date: getFormattedDate(user.created_at, 'd-m-y'),
-            time: moment(user.created_at).format("LT"),
+        customers.data.length >= 0 &&
+        customers.data.map((customer) => ({
+            id: customer.id,
+            name: customer.name,
+            email: customer.email,
+            phone: customer.phone,
+            country: customer.country,
+            city: customer.city,
+            date: getFormattedDate(customer.created_at, 'd-m-y'),
+            time: moment(customer.created_at).format("LT"),
         }));
 
     return (
         <AuthenticatedLayout>
             <TopProgressBar isLoading={isLoading} />
-            <TabTitle title={placeholderText("users.title")} />
+            <TabTitle title={placeholderText("customers.title")} />
 
             <ReactDataTable
                 columns={columns}
                 items={itemsValue}
                 onChange={onChange}
-                ButtonValue={getFormattedMessage("user.create.title")}
-                to="/users/create"
-                totalRows={1}
+                ButtonValue={getFormattedMessage("customer.create.title")}
+                to="/customers/create"
+                totalRows={total}
                 isLoading={isLoading}
             />
 
             {deleteModel && <DeleteModel onClickDeleteModel={onClickDeleteModel} deleteModel={deleteModel} isDelete={isDelete}
-                deleteUserClick={deleteUserFunction} name={getFormattedMessage('users.table.user.column.title')} />}
+                deleteUserClick={deleteUserFunction} name={getFormattedMessage('customers.table.customer.column.title')} />}
         </AuthenticatedLayout>
     )
 }
 
-export default Users    
+export default Customers    

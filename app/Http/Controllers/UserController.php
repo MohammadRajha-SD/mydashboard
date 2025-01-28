@@ -91,5 +91,4 @@ class UserController extends Controller
             return redirect()->back()->with('error', 'Failed to delete the user.');
         }
     }
-
 }
