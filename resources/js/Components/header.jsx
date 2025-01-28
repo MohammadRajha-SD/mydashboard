@@ -10,7 +10,7 @@ const HeaderTitle = (props) => {
         <div className='text-end mt-4 mt-md-0'>
             {editLink ? <Link to={editLink}
                               className='btn btn-outline-primary me-2'>{getFormattedMessage('globally.edit-btn')}</Link> : null}
-            {to ? <Link to={to}
+            {to ? <Link href={to}
                         className='btn btn-outline-primary'>{getFormattedMessage('globally.back-btn')}</Link> : null}
         </div>
     </div>

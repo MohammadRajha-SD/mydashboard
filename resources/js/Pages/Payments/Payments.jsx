@@ -10,8 +10,8 @@ import { router } from '@inertiajs/react';
 import ActionButton from '@/shared/action-buttons/ActionButton';
 import DeleteModel from '../../shared/action-buttons/DeleteModel';
 
-const Projects = (props) => {
-    const { projects, isLoading, total } = props;
+const Payments = (props) => {
+    const { payments, isLoading, total } = props;
     const [deleteModel, setDeleteModel] = useState(false);
     const [isDelete, setIsDelete] = useState(null);
 
@@ -22,21 +22,20 @@ const Projects = (props) => {
 
     const onChange = (filter) => {
         // fetchUsers(filter, true);
-
     };
 
     const goToEdit = (item) => {
         const id = item.id;
-        router.get(route('projects.edit', { id: id }));
+        router.get(route('payments.edit', { id: id }));
     };
 
     const deleteUserFunction = (id) => {
-        Inertia.delete(route("projects.destroy", id), {
+        Inertia.delete(route("payments.destroy", id), {
             onSuccess: () => {
-                alert("projects deleted successfully!");
+                alert("payments deleted successfully!");
             },
             onError: (error) => {
-                console.error("Error deleting projects:", error);
+                console.error("Error deleting payments:", error);
             },
         });
     }
@@ -57,52 +56,54 @@ const Projects = (props) => {
             },
         },
         {
-            name: getFormattedMessage("globally.title.label"),
-            selector: (row) => row.title,
-            sortField: "title",
+            name: getFormattedMessage("project.title"),
+            selector: (row) => row.project_title,
+            sortField: "project_title",
             sortable: true,
         },
         {
             name: getFormattedMessage("globally.total_amount.label"),
-            selector: (row) => "$" + row.total_amount,
+            selector: (row) => (
+                <div>
+                    <span
+                        style={{
+                            backgroundColor: "#f0f0f0",
+                            color: "#333",
+                            padding: "5px 10px",
+                            borderRadius: "12px",
+                            fontSize: "14px",
+                            fontWeight: "bold",
+                            display: "inline-block",
+                        }}
+                    >
+                        {"$" + row.total_amount}
+                    </span>
+                </div>
+            ),
             sortField: "total_amount",
             sortable: true,
         },
         {
-            name: getFormattedMessage("globally.status.label"),
-            sortField: "status",
+            name: getFormattedMessage("globally.amount.label"),
+            selector: (row) => (
+                <div>
+                    <span
+                        style={{
+                            backgroundColor: "#f0f0f0",
+                            color: "#333",
+                            padding: "5px 10px",
+                            borderRadius: "12px",
+                            fontSize: "14px",
+                            fontWeight: "bold",
+                            display: "inline-block",
+                        }}
+                    >
+                        {"$" + row.amount}   
+                    </span>
+                </div>
+            ),
+            sortField: "amount",
             sortable: true,
-            cell: (row) => {
-                return (
-                    (row.status === 'Completed' && (
-                        <span className="badge bg-light-success">
-                            <span>
-                                {getFormattedMessage(
-                                    "status.filter.complated.label"
-                                )}
-                            </span>
-                        </span>
-                    )) ||
-                    (row.status === "Pending" && (
-                        <span className="badge bg-light-primary">
-                            <span>
-                                {getFormattedMessage(
-                                    "status.filter.pending.label"
-                                )}
-                            </span>
-                        </span>
-                    )) ||
-                    (row.status === "In Progress" && (
-                        <span className="badge bg-light-warning">
-                            <span>
-                                {getFormattedMessage(
-                                    "status.filter.in_progress.label"
-                                )}
-                            </span>
-                        </span>
-                    ))
-                );
-            },
         },
         {
             name: getFormattedMessage(
@@ -138,36 +139,37 @@ const Projects = (props) => {
     ];
 
     const itemsValue =
-        projects.data.length >= 0 &&
-        projects.data.map((project) => ({
-            id: project.id,
-            customer_name: project.customer.name,
-            customer_email: project.customer.email,
-            title: project.title,
-            total_amount: project.total_amount,
-            status: project.status,
-            date: getFormattedDate(project.created_at, 'd-m-y'),
-            time: moment(project.created_at).format("LT"),
+        payments.data.length >= 0 &&
+        payments.data.map((payment) => ({
+            id: payment.id,
+            customer_name: payment.project.customer.name,
+            customer_email: payment.project.customer.email,
+            project_title: payment.project.title,
+            total_amount: payment.project.total_amount,
+            amount: payment.amount,
+            date: getFormattedDate(payment.created_at, 'd-m-y'),
+            time: moment(payment.created_at).format("LT"),
         }));
+
     return (
         <AuthenticatedLayout>
             <TopProgressBar isLoading={isLoading} />
-            <TabTitle title={placeholderText("projects.title")} />
+            <TabTitle title={placeholderText("payments.title")} />
 
             <ReactDataTable
                 columns={columns}
                 items={itemsValue}
                 onChange={onChange}
-                ButtonValue={getFormattedMessage("project.create.title")}
-                to="/projects/create"
+                ButtonValue={getFormattedMessage("payment.create.title")}
+                to="/payments/create"
                 totalRows={total}
                 isLoading={isLoading}
             />
 
             {deleteModel && <DeleteModel onClickDeleteModel={onClickDeleteModel} deleteModel={deleteModel} isDelete={isDelete}
-                deleteUserClick={deleteUserFunction} name={getFormattedMessage('project.title')} />}
+                deleteUserClick={deleteUserFunction} name={getFormattedMessage('payment.title')} />}
         </AuthenticatedLayout>
     )
 }
 
-export default Projects;
+export default Payments;

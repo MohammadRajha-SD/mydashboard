@@ -1,6 +1,8 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPieChart, faUser, faUserGroup } from "@fortawesome/free-solid-svg-icons";
+import { faCreditCard, faMoneyBillWave, faWallet, faProjectDiagram } from "@fortawesome/free-solid-svg-icons";
+
 import { getFormattedMessage } from "@/Helpers/Helpers";
 
 export default [
@@ -41,10 +43,18 @@ export default [
         ],
     },
     {
-        title: getFormattedMessage('product.title'),
+        title: getFormattedMessage('projects.title'),
         name: 'projects',
-        fontIcon: <FontAwesomeIcon icon={faPieChart} />,
+        fontIcon: <FontAwesomeIcon icon={faProjectDiagram} />,
         to: '/projects',
+        class: "d-flex",
+        isSubMenu: false,
+    },
+    {
+        title: getFormattedMessage('payments.title'),
+        name: 'payments',
+        fontIcon: <FontAwesomeIcon icon={faCreditCard} />,
+        to: '/payments',
         class: "d-flex",
         isSubMenu: false,
     },

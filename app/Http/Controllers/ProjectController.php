@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Project;
+use App\Models\Customer;
+
+use function PHPSTORM_META\map;
 
 class ProjectController extends Controller
 {
@@ -19,60 +22,62 @@ class ProjectController extends Controller
 
     public function create()
     {
-        return Inertia::render('Projects/CreateProject');
+        $customers = Customer::all();
+
+        return Inertia::render('Projects/CreateProject', [
+            'customers' => $customers,
+        ]);
     }
 
     public function store(Request $request)
     {
         // Validate the incoming request
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:customers,email',
-            'phone' => 'required|numeric',
-            'country' => 'required|string',
-            'city' => 'required|string',
-            'dob' => 'nullable|date',
-            'address' => 'required',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'customer_id' => 'required|exists:customers,id',
+            'total_amount' => 'required|numeric',
+            'status' => 'required',
         ]);
 
         Project::create($validatedData);
 
-        return redirect()->route('customers.index')->with('success', 'Customers created successfully.');
+        return redirect()->route('projects.index')->with('success', 'Projects created successfully.');
     }
 
     public function edit($id)
     {
-        $customer = Project::findOrFail($id);
-        return inertia('Customers/EditCustomer', ['customer' => $customer]);
+        $project = Project::findOrFail($id);
+        $customers = Customer::all();
+
+        return inertia('Projects/EditProject', ['project' => $project, 'customers' => $customers]);
     }
 
     public function update(Request $request, $id)
     {
-        $customer = Project::findOrFail($id);
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:customers,email,' . $customer->id,
-            'phone' => 'required|numeric',
-            'country' => 'required|string',
-            'city' => 'required|string',
-            'dob' => 'nullable|date',
-            'address' => 'required',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'customer_id' => 'required|exists:customers,id',
+            'total_amount' => 'required|numeric',
+            'status' => 'required',
         ]);
+        
+        $project = Project::findOrFail($id);
+        $project->update($validated);
 
-        $customer->update($validated);
-
-        return redirect()->route('customers.index')->with('success', 'Customer updated successfully.');
+        return redirect()->route('projects.index')->with('success', 'Projects updated successfully.');
     }
 
     public function destroy($id)
     {
-        $customer = Project::findOrFail($id);
+        $project = Project::findOrFail($id);
 
         try {
-            $customer->delete();
-            return redirect()->back()->with('success', 'customer deleted successfully.');
+            $project->delete();
+            return redirect()->back()->with('success', 'Project deleted successfully.');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Failed to delete the customer.');
+            return redirect()->back()->with('error', 'Failed to delete the Project.');
         }
     }
 }
