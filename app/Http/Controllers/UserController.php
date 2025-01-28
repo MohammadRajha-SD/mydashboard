@@ -23,10 +23,6 @@ class UserController extends Controller
         return Inertia::render('Users/CreateUser');
     }
 
-    // Handle form submission
-
-
-
     public function store(Request $request)
     {
         // Validate the incoming request

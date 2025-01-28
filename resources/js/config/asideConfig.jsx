@@ -40,4 +40,12 @@ export default [
             },
         ],
     },
+    {
+        title: getFormattedMessage('product.title'),
+        name: 'projects',
+        fontIcon: <FontAwesomeIcon icon={faPieChart} />,
+        to: '/projects',
+        class: "d-flex",
+        isSubMenu: false,
+    },
 ];

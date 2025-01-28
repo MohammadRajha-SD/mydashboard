@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->string('title');
             $table->text('description')->nullable();
             $table->decimal('total_amount', 10, 2); // e.g., $100.00
-            $table->enum('status', ['Pending', 'In Progress', 'Completed'])->default('Pending');
+            $table->enum('status', allowed: ['Pending', 'In Progress', 'Completed'])->default('Pending');
             $table->timestamps();
         });
     }
